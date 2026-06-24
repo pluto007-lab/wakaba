@@ -160,7 +160,7 @@
                 <div class="relative bg-white p-6 rounded-3xl shadow-xl border-4 border-white max-w-sm w-full">
                     <!-- 親しみやすい手書き風のビジュアル -->
                     <div class="aspect-square bg-emerald-50 rounded-2xl flex flex-col items-center justify-center p-6 text-center relative overflow-hidden">
-                        
+
                         <div class="absolute -top-10 -right-10 w-24 h-24 bg-wakaba-accent/10 rounded-full"></div>
                         <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-wakaba/5 rounded-full"></div>
                         
@@ -382,6 +382,39 @@
                 </div>
             </div>
 
+            <!-- カウントダウンタイマー -->
+            <div class="mt-12 bg-white p-8 rounded-3xl shadow-md border-2 border-wakaba-accent text-center">
+                <p class="text-base font-black text-wakaba-accent bg-amber-100 px-3 py-1 rounded-full inline-block mb-4">
+                期間限定キャンペーン
+                </p>
+            
+                <h4 class="text-2xl md:text-3xl font-black text-stone-900 mb-6">
+                入会金無料キャンペーン終了まで
+                </h4>
+            
+                <div class="grid grid-cols-4 gap-3 max-w-md mx-auto">
+                <div class="bg-wakaba-light rounded-2xl p-4">
+                    <p id="days" class="text-3xl font-black text-wakaba">0</p>
+                    <p class="text-sm font-bold text-stone-600">日</p>
+                </div>
+                <div class="bg-wakaba-light rounded-2xl p-4">
+                    <p id="hours" class="text-3xl font-black text-wakaba">0</p>
+                    <p class="text-sm font-bold text-stone-600">時間</p>
+                </div>
+                <div class="bg-wakaba-light rounded-2xl p-4">
+                    <p id="minutes" class="text-3xl font-black text-wakaba">0</p>
+                    <p class="text-sm font-bold text-stone-600">分</p>
+                </div>
+                <div class="bg-wakaba-light rounded-2xl p-4">
+                    <p id="seconds" class="text-3xl font-black text-wakaba">0</p>
+                    <p class="text-sm font-bold text-stone-600">秒</p>
+                </div>
+                </div>
+
+                <p class="text-sm font-bold text-stone-500 mt-4">
+                    2026年7月31日まで
+                </p>
+            </div>
             <!-- 親子割・ご紹介キャンペーン -->
             <div class="mt-12 bg-emerald-50 p-6 rounded-3xl border border-wakaba/20 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center gap-4 text-left">
@@ -877,39 +910,68 @@
         };
 
         // スライダー画像
-const images = [
-  "img/image1.png",
-  "img/image2.png",
-  "img/image3.png"
-];
+        const images = [
+        "img/image1.png",
+        "img/image2.png",
+        "img/image3.png"
+        ];
 
-let currentIndex = 0;
+        let currentIndex = 0;
 
-function showSlide() {
-  document.getElementById("slideImage").src = images[currentIndex];
-}
+        function showSlide() {
+        document.getElementById("slideImage").src = images[currentIndex];
+        }
 
-function nextSlide() {
-  currentIndex++;
+        function nextSlide() {
+        currentIndex++;
 
-  if (currentIndex >= images.length) {
-    currentIndex = 0;
-  }
+        if (currentIndex >= images.length) {
+            currentIndex = 0;
+        }
 
-  showSlide();
-}
+        showSlide();
+        }
 
-function prevSlide() {
-  currentIndex--;
+        function prevSlide() {
+        currentIndex--;
 
-  if (currentIndex < 0) {
-    currentIndex = images.length - 1;
-  }
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1;
+        }
 
-  showSlide();
-}
+        showSlide();
+        }
 
-setInterval(nextSlide, 3000);
+        setInterval(nextSlide, 3000);
+
+        // カウントダウンタイマー
+        function updateCountdown() {
+        const targetDate = new Date("2026-07-31T23:59:59");
+        const now = new Date();
+
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            document.getElementById("days").textContent = "0";
+            document.getElementById("hours").textContent = "0";
+            document.getElementById("minutes").textContent = "0";
+            document.getElementById("seconds").textContent = "0";
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+        const minutes = Math.floor(diff / (1000 * 60)) % 60;
+        const seconds = Math.floor(diff / 1000) % 60;
+
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
